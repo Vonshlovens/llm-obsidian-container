@@ -1,0 +1,36 @@
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # UID/GID for the 'dev' user. On Windows it’s less critical, but we keep for portability.
+        USER_ID: 1000
+        GROUP_ID: 1000
+        USERNAME: dev
+    image: von-node-dev:latest
+    container_name: von-node-dev
+    # Mount your host directory into /workspace
+    volumes:
+      - type: bind
+        source: .
+        target: /workspace
+    environment:
+      # Fill these in or use an .env file
+      AZURE_OPENAI_API_KEY:
+      GOOGLE_API_KEY:
+      GOOGLE_GENAI_USE_VERTEXAI: "true"
+      # Optional: set default shell to zsh for non-interactive terminals too
+      SHELL: /usr/bin/zsh
+      # Optional: set editor
+      EDITOR: nano
+    working_dir: /workspace
+    tty: true
+    stdin_open: true
+    # Expose Node typical ports if you run local servers
+    ports:
+      - "3000:3000"
+      - "5173:5173"
+      - "8080:8080"
+    # Keep it running and usable as a dev shell
+    command: [ "zsh", "-l" ]
