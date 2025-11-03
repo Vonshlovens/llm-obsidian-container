@@ -25,7 +25,6 @@ RUN npm install -g @anthropic-ai/claude-code
 
 # Create codex config directory and file
 RUN mkdir -p /root/.codex && \
-    echo '[default]' > /root/.codex/config.toml && \
     echo 'model = "gpt-5-codex"' >> /root/.codex/config.toml && \
     echo 'model_provider = "azure"' >> /root/.codex/config.toml && \
     echo 'model_reasoning_effort = "medium"' >> /root/.codex/config.toml && \
